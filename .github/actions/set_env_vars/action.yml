@@ -1,0 +1,22 @@
+name: set_env_vars
+description: >
+ Set environment variables for the rest of the workflow
+inputs:
+  user_name:
+    description: User name
+    required: true
+  databricks_host:
+    description: dbr host
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup env vars
+      id: setup_env_vars
+      shell: bash
+      run: |
+        echo "USER_NAME=${{ inputs.user_name }}" >> $GITHUB_ENV
+        echo "DATABRICKS_HOST=${{ inputs.databricks_host }}" >> $GITHUB_ENV
+        echo "GIT_TAG=${{ github.sha }}" >> $GITHUB_ENV
+        echo "PROJECT_NAME=$( echo ${{ github.repository }} | cut -d "/" -f2 )" >> $GITHUB_ENV
