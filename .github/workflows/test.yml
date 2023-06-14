@@ -1,0 +1,16 @@
+name: CI
+
+on:
+  workflow_dispatch:
+     
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Echo variable
+        run: |
+            name=$(yq eval '.user.orders[] | select(. == "43*")' user.yml)
+            echo $name
