@@ -1,4 +1,4 @@
-name: CI
+name: test
 
 on:
   workflow_dispatch:
@@ -12,5 +12,5 @@ jobs:
 
       - name: Echo variable
         run: |
-            name=$(yq eval '.user.orders[] | select(. == "43*")' user.yml)
+            name=$(yq eval '.environments.default.workflows[0].name' "dbx_deployment.yml.j2")
             echo $name
