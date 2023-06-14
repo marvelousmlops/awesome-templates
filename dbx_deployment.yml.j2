@@ -1,6 +1,6 @@
 build:
-    python: "pip"
-  
+  python: "pip"
+
 environments:
   default:
     workflows:
@@ -20,12 +20,21 @@ environments:
             job_cluster_key: "recommender_cluster"
             spark_python_task:
               python_file: "file://recommender/train_recommender.py"
-              parameters: ["--run_id", "{{parent_run_id}}", "--job_id", "{{job_id}}"]
+              parameters: [
+                      "--run_id",
+                      "{{parent_run_id}}",
+                      "--job_id",
+                      "{{job_id}}"
+              ]
           - task_key: "deploy_model"
             job_cluster_key: "recommender_cluster"
             spark_python_task:
               python_file: "file://recommender/deploy_recommender.py"
-              parameters: ["--run_id", "{{parent_run_id}}", "--job_id", "{{job_id}}"]
+              parameters: [
+                      "--run_id",
+                      "{{parent_run_id}}",
+                      "--job_id",
+                      "{{job_id}}"
+              ]
             depends_on:
               - task_key: "train_model"
-              
